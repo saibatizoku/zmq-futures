@@ -14,8 +14,9 @@ where
     T: MessageSend + 'a,
 {
     /// Create a new `SendMessage` future.
-    pub fn new(socket: &'a T, message: Message) -> SendMessage<'a, T>
+    pub fn new<M: Into<Message>>(socket: &'a T, msg: M) -> SendMessage<'a, T>
     {
+        let message = msg.into();
         SendMessage { socket, message }
     }
 }
