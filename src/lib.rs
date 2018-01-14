@@ -1,4 +1,4 @@
-//! Futures for ØMQ sockets.
+//! Rust futures, streams, and sinks for ØMQ sockets.
 extern crate futures;
 extern crate zmq;
 
@@ -9,8 +9,12 @@ use std::io;
 
 use zmq::{Message, Sendable};
 
-pub use recv::*;
-pub use send::*;
+pub mod future {
+    //! Futures for ØMQ sockets.
+    pub use recv::*;
+    pub use send::*;
+}
+
 
 /// Receives simple and multipart `Message`s.
 pub trait MessageRecv {
@@ -21,10 +25,10 @@ pub trait MessageRecv {
 /// Sends simple and multipart `Message`s.
 pub trait MessageSend {
     fn send<T>(&self, T, i32) -> io::Result<()>
-    where
-        T: Sendable;
+        where
+            T: Sendable;
     fn send_multipart<I, T>(&self, I, i32) -> io::Result<()>
-    where
-        I: IntoIterator<Item = T>,
-        T: Into<Message>;
+        where
+            I: IntoIterator<Item = T>,
+            T: Into<Message>;
 }
