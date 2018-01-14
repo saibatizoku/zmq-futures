@@ -2,12 +2,14 @@
 extern crate futures;
 extern crate zmq;
 
+mod recv;
 mod send;
 
 use std::io;
 
 use zmq::{Message, Sendable};
 
+pub use recv::*;
 pub use send::*;
 
 
