@@ -1,7 +1,7 @@
 use std::io;
 use futures::{Async, Future, Poll};
 
-use {MessageSend, Message};
+use {Message, MessageSend};
 
 /// A Future that sends a `Message`.
 pub struct SendMessage<'a, T: 'a> {
@@ -14,8 +14,7 @@ where
     T: MessageSend + 'a,
 {
     /// Create a new `SendMessage` future.
-    pub fn new<M: Into<Message>>(socket: &'a T, msg: M) -> SendMessage<'a, T>
-    {
+    pub fn new<M: Into<Message>>(socket: &'a T, msg: M) -> SendMessage<'a, T> {
         let message = msg.into();
         SendMessage { socket, message }
     }
@@ -48,7 +47,7 @@ pub struct SendMultipartMessage<'a, T: 'a> {
     messages: Vec<Vec<u8>>,
 }
 
-impl<'a, T>  SendMultipartMessage<'a, T>
+impl<'a, T> SendMultipartMessage<'a, T>
 where
     T: MessageSend + 'a,
 {
