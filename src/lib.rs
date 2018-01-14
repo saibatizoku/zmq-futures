@@ -1,5 +1,6 @@
 //! Rust futures, streams, and sinks for ØMQ sockets.
 extern crate futures;
+#[cfg(test)] extern crate futures_cpupool;
 extern crate zmq;
 
 mod recv;
@@ -31,4 +32,12 @@ pub trait MessageSend {
         where
             I: IntoIterator<Item = T>,
             T: Into<Message>;
+}
+
+/// Listens for incoming messages.
+pub trait Listen: MessageRecv + MessageSend {
+    type Stream: futures::Stream;
+
+    /// Return a stream of received messages.
+    fn listen(&self) -> Self::Stream;
 }
