@@ -2,9 +2,13 @@
 extern crate futures;
 extern crate zmq;
 
+mod send;
+
 use std::io;
 
 use zmq::{Message, Sendable};
+
+pub use send::*;
 
 
 /// Receives simple and multipart `Message`s.
