@@ -1,3 +1,4 @@
+//! Futures for receiving messages.
 use std::io;
 use futures::{Async, Future, Poll};
 
